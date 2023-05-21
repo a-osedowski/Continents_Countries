@@ -10,7 +10,6 @@ def home(request):
         continent = request.POST.get('continent')
         number_str = request.POST.get('number')
         number = int(number_str)
-        print("requested")
 
         countries_list = retrieve_region(continent, number)
 
@@ -78,6 +77,8 @@ def retrieve_region(region, number):
     countries_arr = []
 
     # get random countries
+    if (countries_len <= number):
+        number = countries_len - 1
     random_numbers = random.sample(range(0, countries_len - 1), number)
     for i in random_numbers:
         country = result['data']['continent']['countries'][i]['name']
@@ -96,6 +97,8 @@ def retrieve_country_info(countries_arr):
         url = "https://restcountries.com/v3.1/name/{}".format(country)
         response_json = requests.get(url=url)
         result = json.loads(response_json.text)
+        currency_names = []
+        languages_names = []
         try:
             name = result[0]['name']['official']
         except:
@@ -113,7 +116,7 @@ def retrieve_country_info(countries_arr):
             currencies = result[0]['currencies']
             currency_names = [value['name'] for value in currencies.values()]
         except:
-            currency_names[0] = "No information found!"
+            currency_names.append("No information found!")
         try:
             subregion = result[0]['subregion']
         except:
@@ -122,7 +125,7 @@ def retrieve_country_info(countries_arr):
             languages = result[0]['languages']
             languages_names = list(languages.values())
         except:
-            languages_names[0] = "No information found!"
+            languages_names.append("No information found!")
 
         # dict with country and information
         country = {
