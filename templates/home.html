@@ -15,6 +15,20 @@
         <br>
         <input type="submit" value="Submit">
     </form>
+
+     <h1>Country Information:</h1>
+    {% for country in countries %}
+    <div>
+        <h2>{{ country.name }}</h2>
+        <ul>
+            <li>Capital: {{ country.capital }}</li>
+            <li>Population: {{ country.population }}</li>
+            <li>Currency: {{ country.currencies|join:", " }}</li>
+            <li>Subregion: {{ country.subregion }}</li>
+            <li>Languages: {{ country.languages|join:", " }}</li>
+        </ul>
+    </div>
+    {% endfor %}
     {% if validation_message %}
         <script>alert("{{ validation_message }}");</script>
     {% endif %}
