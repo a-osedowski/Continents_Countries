@@ -11,6 +11,7 @@ First install django in an existing python3 virtualenv
 Clone a repository:
 
     $ git clone https://github.com/a-osedowski/Continents_Countries.git
+    $ cd Continents_Countries
     
 Install the requirements:
 
