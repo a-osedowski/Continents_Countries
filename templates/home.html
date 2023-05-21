@@ -5,7 +5,8 @@
     <title>Continents&Countries</title>
 </head>
 <body>
-    <form action="/countries" method="post">
+    <form method="post">
+        {% csrf_token %}
         <label for="continent">Continent:</label>
         <input type="text" id="continent" name="continent" required>
         <br>
@@ -14,5 +15,8 @@
         <br>
         <input type="submit" value="Submit">
     </form>
+    {% if validation_message %}
+        <script>alert("{{ validation_message }}");</script>
+    {% endif %}
 </body>
 </html>
