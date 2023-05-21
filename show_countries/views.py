@@ -12,12 +12,6 @@ def home(request):
         number = int(number_str)
         print("requested")
 
-        # check if given number is in range from 2 to 10
-        if (number < 2 or number > 10):
-            print("Number should be between 2 and 10")
-            validation_message = "Number should be between 2 and 10"
-            return render(request, 'home.html', {'validation_message': validation_message})
-
         countries_list = retrieve_region(continent, number)
 
         # check if given continent name exist
@@ -111,7 +105,8 @@ def retrieve_country_info(countries_arr):
         except:
             capital = "No information found!"
         try:
-            population = result[0]['population']
+            population_str = result[0]['population']
+            population = int(population_str)
         except:
             population = "No information found!"
         try:

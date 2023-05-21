@@ -1,38 +1,53 @@
+{% load humanize %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Continents&Countries</title>
+    <title>Continents & Countries</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 </head>
 <body>
-    <h1>Continents&Countries</h1>
+    <div class="container">
+        <h1 class="mt-5 text-center">Continents & Countries</h1>
 
-    <form method="post">
-        {% csrf_token %}
-        <label for="continent">Continent:</label>
-        <input type="text" id="continent" name="continent" required>
-        <br>
-        <label for="number">Number:</label>
-        <input type="number" id="number" name="number" required>
-        <br>
-        <input type="submit" value="Submit">
-    </form>
+        <form method="post" class="mt-4">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="continent">Continent:</label>
+                <input type="text" id="continent" name="continent" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="number">Number:</label>
+                <input type="number" id="number" name="number" class="form-control" required min="2" max="10">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
 
-    {% for country in countries %}
-    <div>
-        <h2>{{ country.name }}</h2>
-        <ul>
-            <li>Capital: {{ country.capital }}</li>
-            <li>Population: {{ country.population }}</li>
-            <li>Currency: {{ country.currencies|join:", " }}</li>
-            <li>Subregion: {{ country.subregion }}</li>
-            <li>Languages: {{ country.languages|join:", " }}</li>
-        </ul>
+        {% for country in countries %}
+        <div class="card mt-4">
+            <div class="card-header">
+                <h2>{{ country.name }}</h2>
+            </div>
+            <div class="card-body">
+                <ul>
+                    <li>Capital: {{ country.capital }}</li>
+                    <li>Population: {{ country.population|intcomma }}</li>
+                    <li>Currency: {{ country.currencies|join:", " }}</li>
+                    <li>Subregion: {{ country.subregion }}</li>
+                    <li>Languages: {{ country.languages|join:", " }}</li>
+                </ul>
+            </div>
+        </div>
+        {% endfor %}
+
+        {% if validation_message %}
+            <script>alert("{{ validation_message }}");</script>
+        {% endif %}
     </div>
-    {% endfor %}
 
-    {% if validation_message %}
-        <script>alert("{{ validation_message }}");</script>
-    {% endif %}
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
 </body>
 </html>
